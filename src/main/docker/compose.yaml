@@ -1,0 +1,29 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_DB: dnd
+      POSTGRES_USER: dmadmin
+      POSTGRES_PASSWORD: admin123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  backend:
+    image: dnd-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/dnd
+      SPRING_DATASOURCE_USERNAME: dmadmin
+      SPRING_DATASOURCE_PASSWORD: securepassword
+
+volumes:
+  postgres-data:

@@ -1,5 +1,8 @@
 package pl.paulb.dndmanager.controller;
 
+import io.github.bucket4j.Bandwidth;
+import io.github.bucket4j.Bucket;
+import io.github.bucket4j.Refill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Duration;
 import java.util.Optional;
 
 @RestController
@@ -27,10 +31,21 @@ public class SessionController {
     @Autowired
     private CampaignService campaignService;
 
+    // Define a bucket for rate limiting
+    private final Bucket bucket = Bucket.builder()
+            .addLimit(Bandwidth.classic(10, Refill.intervally(10, Duration.ofMinutes(1))))
+            .build();
+
     @PostMapping
     public ResponseEntity<Session> createSession(@RequestBody Session session) {
-        Session newSession = sessionService.createSession(session);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newSession);
+        if (bucket.tryConsume(1)) {
+            // Proceed with creating the session if rate limit is not exceeded
+            Session createdSession = sessionService.createSession(session);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdSession);
+        } else {
+            // Respond with 429 Too Many Requests if the rate limit is exceeded
+            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
+        }
     }
 
     @GetMapping

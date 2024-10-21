@@ -1,4 +1,4 @@
-package pl.paulb.dndmanager.models;
+package pl.paulb.dndmanager.model;
 
 public class User {
 }

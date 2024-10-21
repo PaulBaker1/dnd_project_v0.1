@@ -17,9 +17,9 @@ ENTRYPOINT ["java", "-jar", "/app/dnd-session-manager.jar"]
 FROM postgres:13-alpine
 
 # Set environment variables for PostgreSQL setup
-ENV POSTGRES_DB=dnd
-ENV POSTGRES_USER=dmadmin
-ENV POSTGRES_PASSWORD=securepassword
+ENV POSTGRES_DB=dnd_db
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWORD=admin123
 
 # Expose the default PostgreSQL port
 EXPOSE 5432

@@ -4,6 +4,8 @@ import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
 import io.github.bucket4j.Refill;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,12 +13,6 @@ import pl.paulb.dndmanager.model.Session;
 import pl.paulb.dndmanager.model.SessionLog;
 import pl.paulb.dndmanager.service.CampaignService;
 import pl.paulb.dndmanager.service.SessionService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Duration;
 import java.util.Optional;
@@ -25,16 +21,14 @@ import java.util.Optional;
 @RequestMapping("/api/sessions")
 public class SessionController {
 
-    @Autowired
-    private SessionService sessionService;
-
-    @Autowired
-    private CampaignService campaignService;
-
     // Define a bucket for rate limiting
     private final Bucket bucket = Bucket.builder()
             .addLimit(Bandwidth.classic(10, Refill.intervally(10, Duration.ofMinutes(1))))
             .build();
+    @Autowired
+    private SessionService sessionService;
+    @Autowired
+    private CampaignService campaignService;
 
     @PostMapping
     public ResponseEntity<Session> createSession(@RequestBody Session session) {

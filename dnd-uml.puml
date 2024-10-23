@@ -1,0 +1,237 @@
+@startuml
+class pl.paulb.dndmanager.model.Session {
+- Long id
+- LocalDateTime sessionDate
+- String notes
+- {static} DateTimeFormatter FORMATTER
++ void postLoad()
++ void truncateDateTime()
++ Long getId()
++ void setId(Long)
++ LocalDateTime getSessionDate()
++ void setSessionDate(LocalDateTime)
++ String getNotes()
++ void setNotes(String)
+}
+
+
+class pl.paulb.dndmanager.model.User {
+}
+interface pl.paulb.dndmanager.repository.ResourceRepository {
+~ List<Resource> findByCampaignId(Long)
+}
+
+interface pl.paulb.dndmanager.repository.SessionLogRepository {
+~ Page<SessionLog> findByCampaignId(Long,Pageable)
+}
+
+class pl.paulb.dndmanager.controller.ResourceController {
+- ResourceService resourceService
++ <<Create>> ResourceController(ResourceService)
++ ResponseEntity<Resource> uploadResource(Resource)
++ List<Resource> getResourcesForCampaign(Long)
++ ResponseEntity<Void> deleteResource(Long)
+}
+
+
+class pl.paulb.dndmanager.service.ResourceService {
+- ResourceRepository resourceRepository
++ Resource uploadResource(Resource)
++ List<Resource> getResourcesForCampaign(Long)
++ boolean deleteResource(Long)
+}
+
+
+class pl.paulb.dndmanager.deserializer.CustomDateTimeDeserializer {
+- {static} DateTimeFormatter FORMATTER_WITH_SECONDS
+- {static} DateTimeFormatter FORMATTER_WITHOUT_SECONDS
++ DateTime deserialize(JsonParser,DeserializationContext)
+}
+
+
+class pl.paulb.dndmanager.model.SessionLog {
+- Long id
+- Campaign campaign
+- LocalDateTime logDate
+- String logNotes
++ Long getId()
++ void setId(Long)
++ Campaign getCampaign()
++ void setCampaign(Campaign)
++ LocalDateTime getLogDate()
++ void setLogDate(LocalDateTime)
++ String getLogNotes()
++ void setLogNotes(String)
+}
+
+
+class pl.paulb.dndmanager.controller.SessionController {
+- SessionService sessionService
+- CampaignService campaignService
+- Bucket bucket
++ ResponseEntity<Session> createSession(Session)
++ ResponseEntity<Page<Session>> getAllSessions(Pageable)
++ ResponseEntity<Session> getSessionById(Long)
++ ResponseEntity<Session> updateSession(Long,Session)
++ ResponseEntity<Void> deleteSession(Long)
++ ResponseEntity<Optional<Page<SessionLog>>> getCampaignHistory(Long,Pageable)
+}
+
+
+class pl.paulb.dndmanager.config.WebSocketConfig {
++ void configureMessageBroker(MessageBrokerRegistry)
++ void registerStompEndpoints(StompEndpointRegistry)
+}
+
+class pl.paulb.dndmanager.model.Resource {
+- Long id
+- Campaign campaign
+- String resourceType
+- String content
++ Long getId()
++ void setId(Long)
++ Campaign getCampaign()
++ void setCampaign(Campaign)
++ String getResourceType()
++ void setResourceType(String)
++ String getContent()
++ void setContent(String)
+}
+
+
+class pl.paulb.dndmanager.SessionControllerTest {
+- MockMvc mockMvc
++ void testCreateSession()
+}
+
+
+class pl.paulb.dndmanager.controller.MessagingController {
++ Message sendMessage(Message)
++ Message addUser(Message,SimpMessageHeaderAccessor)
+}
+
+class pl.paulb.dndmanager.model.Message {
+- String sender
+- String content
+- MessageType type
++ String getSender()
++ void setSender(String)
++ String getContent()
++ void setContent(String)
++ MessageType getType()
++ void setType(MessageType)
+}
+
+
+enum pl.paulb.dndmanager.model.MessageType {
++  CHAT
++  JOIN
++  LEAVE
+}
+
+class pl.paulb.dndmanager.config.JacksonConfig {
++ ObjectMapper objectMapper()
+}
+
+class pl.paulb.dndmanager.DndManagerApplicationTests {
+~ void contextLoads()
+}
+
+class pl.paulb.dndmanager.DndManagerApplication {
++ {static} void main(String[])
+}
+
+class pl.paulb.dndmanager.service.SessionService {
+- SessionRepository sessionRepository
+- SessionLogRepository sessionLogRepository
++ Session createSession(Session)
++ Page<Session> getAllSessions(Pageable)
++ Optional<Session> getSessionById(Long)
++ Optional<Page<SessionLog>> getCampaignHistory(Long,Pageable)
++ Optional<Session> updateSession(Long,Session)
++ boolean deleteSession(Long)
+}
+
+
+class DateTimeParser {
+- {static} DateTimeFormatter FLEXIBLE_FORMATTER
++ {static} void main(String[])
++ {static} LocalDateTime parseDateTime(String)
+}
+
+
+class pl.paulb.dndmanager.config.SecurityConfig {
+# void configure(HttpSecurity)
+}
+
+class pl.paulb.dndmanager.service.CampaignService {
+- CampaignRepository campaignRepository
+- SessionLogRepository sessionLogRepository
++ Campaign createCampaign(Campaign)
++ Optional<Page<SessionLog>> getCampaignHistory(Long,Pageable)
++ List<Campaign> getAllCampaigns()
++ Optional<Campaign> getCampaignById(Long)
++ Optional<SessionLog> addSessionLog(Long,SessionLog)
+}
+
+
+interface pl.paulb.dndmanager.repository.SessionRepository {
+~ Page<Session> findAll(Pageable)
+}
+
+class pl.paulb.dndmanager.controller.CampaignController {
+- CampaignService campaignService
++ ResponseEntity<Campaign> createCampaign(Campaign)
++ List<Campaign> getAllCampaigns()
++ ResponseEntity<Campaign> getCampaignById(Long)
++ ResponseEntity<SessionLog> addSessionLog(Long,SessionLog)
++ ResponseEntity<Page<SessionLog>> getCampaignHistory(Long,Pageable)
+}
+
+
+interface pl.paulb.dndmanager.repository.CampaignRepository {
+}
+class pl.paulb.dndmanager.SessionServiceTest {
+- SessionService sessionService
+- SessionRepository sessionRepository
++ void testCreateSession()
+}
+
+
+class pl.paulb.dndmanager.deserializer.LocalDateTimeDeserializer {
+- {static} DateTimeFormatter formatter
++ LocalDateTime deserialize(JsonParser,DeserializationContext)
+}
+
+
+class pl.paulb.dndmanager.model.Campaign {
+- Long id
+- String title
+- String description
++ Long getId()
++ void setId(Long)
++ String getTitle()
++ void setTitle(String)
++ String getDescription()
++ void setDescription(String)
+}
+
+
+class pl.paulb.dndmanager.deserializer.FlexibleLocalDateTimeDeserializer {
+- {static} DateTimeFormatter FORMATTER
++ LocalDateTime deserialize(JsonParser,DeserializationContext)
+}
+
+
+
+
+org.springframework.data.jpa.repository.JpaRepository <|-- pl.paulb.dndmanager.repository.ResourceRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- pl.paulb.dndmanager.repository.SessionLogRepository
+com.fasterxml.jackson.databind.JsonDeserializer <|-- pl.paulb.dndmanager.deserializer.CustomDateTimeDeserializer
+org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer <|.. pl.paulb.dndmanager.config.WebSocketConfig
+pl.paulb.dndmanager.config.WebSecurityConfigurerAdapter <|-- pl.paulb.dndmanager.config.SecurityConfig
+org.springframework.data.jpa.repository.JpaRepository <|-- pl.paulb.dndmanager.repository.SessionRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- pl.paulb.dndmanager.repository.CampaignRepository
+com.fasterxml.jackson.databind.JsonDeserializer <|-- pl.paulb.dndmanager.deserializer.LocalDateTimeDeserializer
+com.fasterxml.jackson.databind.JsonDeserializer <|-- pl.paulb.dndmanager.deserializer.FlexibleLocalDateTimeDeserializer
+@enduml

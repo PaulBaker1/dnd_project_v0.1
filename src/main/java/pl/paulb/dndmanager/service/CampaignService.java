@@ -25,9 +25,16 @@ public class CampaignService {
         return campaignRepository.save(campaign);
     }
 
+    // CampaignService.java
+
     public Optional<Page<SessionLog>> getCampaignHistory(Long campaignId, Pageable pageable) {
-        return Optional.of(sessionLogRepository.findByCampaignId(campaignId, pageable));
+        // Fetch the campaign by ID to ensure it exists, then retrieve session logs
+        if (campaignRepository.existsById(campaignId)) {
+            return Optional.of(sessionLogRepository.findByCampaignId(campaignId, pageable));
+        }
+        return Optional.empty();  // Return empty if the campaign doesn't exist
     }
+
 
     public List<Campaign> getAllCampaigns() {
         return campaignRepository.findAll();
@@ -37,11 +44,12 @@ public class CampaignService {
         return campaignRepository.findById(id);
     }
 
+    // CampaignService.java
+
     public Optional<SessionLog> addSessionLog(Long campaignId, SessionLog log) {
         return campaignRepository.findById(campaignId).map(campaign -> {
-            log.setCampaign(campaign);
-            return sessionLogRepository.save(log);
-        });
+            log.setCampaign(campaign);  // Ensure the log is linked to the correct campaign
+            return Optional.of(sessionLogRepository.save(log));  // Save the log in the repository and wrap in Optional
+        }).orElse(Optional.empty());  // Handle the case where the campaign ID does not exist
     }
-
 }

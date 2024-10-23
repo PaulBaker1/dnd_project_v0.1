@@ -38,18 +38,24 @@ public class CampaignController {
                 .orElseGet(() -> ResponseEntity.status(404).build());
     }
 
+    // CampaignController.java
+
     @PostMapping("/{id}/log")
     public ResponseEntity<SessionLog> addSessionLog(@PathVariable Long id, @RequestBody SessionLog log) {
         Optional<SessionLog> sessionLog = campaignService.addSessionLog(id, log);
         return sessionLog.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.status(404).build());
+                .orElseGet(() -> ResponseEntity.status(404).build());  // Return 404 if the campaign ID is not found
     }
+
+
+    // CampaignController.java
 
     @GetMapping("/{id}/history")
     public ResponseEntity<Page<SessionLog>> getCampaignHistory(@PathVariable Long id, Pageable pageable) {
         return campaignService.getCampaignHistory(id, pageable)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());  // Return 404 if no history is found
     }
+
 
 }

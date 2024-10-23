@@ -15,3 +15,28 @@ spring:
     init:
       mode: always
 
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: your-client-id
+            client-secret: your-client-secret
+            scope:
+              - profile
+              - email
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
+
+logging:
+  pattern:
+    # Changes color of the console output
+    # Green: time, Yellow: logs, Blue: info, Red: threads
+    console: "%green(%d{HH:mm:ss.SSS}) %blue(%-5level) %red([%thread]) %yellow(%logger{15} - %msg%n)"
+
+output:
+  ansi:
+    enabled: ALWAYS

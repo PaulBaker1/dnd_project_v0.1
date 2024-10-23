@@ -3,10 +3,7 @@ package pl.paulb.dndmanager.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.paulb.dndmanager.model.Resource;
-import pl.paulb.dndmanager.model.Session;
 import pl.paulb.dndmanager.repository.ResourceRepository;
-
-
 
 import java.util.List;
 

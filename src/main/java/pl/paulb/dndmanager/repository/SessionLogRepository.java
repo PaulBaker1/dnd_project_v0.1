@@ -6,8 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import pl.paulb.dndmanager.model.SessionLog;
 
-import java.util.List;
-
 @Repository
 public interface SessionLogRepository extends JpaRepository<SessionLog, Long> {
     Page<SessionLog> findByCampaignId(Long campaignId, Pageable pageable);

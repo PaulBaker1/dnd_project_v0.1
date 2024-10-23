@@ -9,7 +9,6 @@ import pl.paulb.dndmanager.model.SessionLog;
 import pl.paulb.dndmanager.repository.SessionLogRepository;
 import pl.paulb.dndmanager.repository.SessionRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service

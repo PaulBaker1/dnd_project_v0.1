@@ -3,8 +3,6 @@ package pl.paulb.dndmanager.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "campaigns")
 public class Campaign {

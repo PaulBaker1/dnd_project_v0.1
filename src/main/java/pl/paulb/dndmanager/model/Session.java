@@ -3,10 +3,7 @@ package pl.paulb.dndmanager.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
-import org.joda.time.DateTime;
 import pl.paulb.dndmanager.deserializer.CustomDateTimeDeserializer;
-import pl.paulb.dndmanager.deserializer.FlexibleLocalDateTimeDeserializer;
-import pl.paulb.dndmanager.deserializer.LocalDateTimeDeserializer;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -17,19 +14,15 @@ import java.time.temporal.ChronoUnit;
 @Table(name = "sessions")
 public class Session {
 
+    // DateTimeFormatter to handle nanoseconds
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.n");
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-
     @JsonDeserialize(using = CustomDateTimeDeserializer.class)
     private LocalDateTime sessionDate;
-
     @Column(name = "notes")
     private String notes;
-
-    // DateTimeFormatter to handle nanoseconds
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.n");
 
     // PostLoad method if you're manually parsing the date
     /*@PostLoad

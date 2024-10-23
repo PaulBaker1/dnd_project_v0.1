@@ -1,5 +1,5 @@
 package pl.paulb.dndmanager;
-import pl.paulb.dndmanager.service.SessionService;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import pl.paulb.dndmanager.model.Session;
 import pl.paulb.dndmanager.repository.SessionRepository;
+import pl.paulb.dndmanager.service.SessionService;
 
 import java.time.LocalDateTime;
 

@@ -1,5 +1,5 @@
 # dnd_project_v0.1
-```markdown
+
 # Dungeons & Dragons Manager
 
 ## Overview
@@ -135,8 +135,6 @@ We welcome contributions from developers interested in enhancing the D&D Manager
 
 ## Contact
 For any issues or suggestions, feel free to create an issue or reach out via GitHub.
-
-```
 
 ### Key Updates:
 - **Backend Config**: Updated instructions to use `application.yml` (instead of `application.properties`).

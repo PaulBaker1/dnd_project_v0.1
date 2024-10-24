@@ -1,5 +1,3 @@
-# dnd_project_v0.1
-
 # Dungeons & Dragons Manager
 
 ## Overview

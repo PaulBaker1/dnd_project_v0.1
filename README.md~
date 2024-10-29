@@ -83,7 +83,7 @@ Once the application is running, you can interact with it through the frontend U
 1. Go to the **Characters** section.
 2. Click **Create Character**.
 3. Fill in the details like name, race, class, background, and ability scores.
-4. Save the persona. You can later level up the persona or track their spells and inventory.
+4. Save the gameCharacter. You can later level up the gameCharacter or track their spells and inventory.
 
 ### Managing Campaigns
 1. Navigate to the **Campaigns** section to start a new campaign.
@@ -96,9 +96,9 @@ The application also includes a real-time chat feature for communication between
 ## Features
 
 - **Character Management**: Create and manage characters with built-in support for races, classes, ability scores, spells, and items.
-- **Spell Tracking**: Manage spell usage with a daily reset system for each persona.
-- **Leveling System**: Automatically handle persona leveling based on experience points.
-- **Inventory and Wallet System**: Manage persona inventories and use a detailed currency system (copper, silver, electrum, gold, platinum).
+- **Spell Tracking**: Manage spell usage with a daily reset system for each gameCharacter.
+- **Leveling System**: Automatically handle gameCharacter leveling based on experience points.
+- **Inventory and Wallet System**: Manage gameCharacter inventories and use a detailed currency system (copper, silver, electrum, gold, platinum).
 - **Session Tracking**: Log in-game sessions and track progress across campaigns.
 - **Real-Time Chat**: Communicate between players and DM via WebSocket-based real-time messaging.
 - **Dockerized**: Use Docker for easy deployment with PostgreSQL and Spring Boot services.

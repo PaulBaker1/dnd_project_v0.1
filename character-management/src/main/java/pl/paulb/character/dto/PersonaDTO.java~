@@ -1,0 +1,22 @@
+package pl.paulb.character.dto;
+
+import com.sun.jdi.ClassType;
+import pl.paulb.character.model.PersonaType;
+import pl.paulb.character.model.RaceType;
+
+import java.util.List;
+
+public class PersonaDTO {
+
+    private Long id;
+    private String name;
+    private int level;
+    private int experiencePoints;
+    private RaceType race;
+    private PersonaType characterClass;
+    private List<AttributeDTO> attributes;
+    private List<SkillDTO> skills;
+    private List<SpellDTO> spells;
+    private List<InventoryItemDTO> inventoryItems;
+
+}

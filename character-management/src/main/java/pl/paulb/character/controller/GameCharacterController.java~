@@ -1,0 +1,33 @@
+package pl.paulb.character.controller;
+
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import pl.paulb.character.dto.GameCharacterDTO;
+import pl.paulb.character.service.GameCharacterService;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/characters")
+public class GameCharacterController {
+
+    @Autowired
+    private GameCharacterService gameCharacterService;
+
+    @PostMapping
+    public ResponseEntity<GameCharacterDTO> createGameCharacter(@Valid @RequestBody GameCharacterDTO GameCharacterDTO) {
+        return ResponseEntity.ok(gameCharacterService.createGameCharacter(GameCharacterDTO));
+    }
+
+    @GetMapping
+    public List<GameCharacterDTO> getAllCharacters() {
+        return gameCharacterService.getAllGameCharacters();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<GameCharacterDTO> getGameCharacterById(@PathVariable Long id) {
+        return gameCharacterService.getGameCharacterById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+}

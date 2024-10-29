@@ -1,0 +1,76 @@
+package pl.paulb.character.dto;
+
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+@Data
+public class GameCharacterDTO {
+    @Setter
+    @Getter
+    private Long id;
+
+    @NotNull
+    @Size(min = 2, max = 100)
+    private String name;
+
+    @NotNull
+    private String race;
+
+    @NotNull
+    private String characterClass;
+
+    @Setter
+    @Getter
+    private int strength;
+
+    @Setter
+    @Getter
+    private int dexterity;
+
+    @Setter
+    @Getter
+    private int constitution;
+
+    @Setter
+    @Getter
+    private int intelligence;
+
+    @Setter
+    @Getter
+    private int wisdom;
+
+    @Setter
+    @Getter
+    private int charisma;
+
+    @Getter
+    @Setter
+    private int level = 1;
+
+    public @NotNull @Size(min = 2, max = 100) String getName() {
+        return name;
+    }
+
+    public void setName(@NotNull @Size(min = 2, max = 100) String name) {
+        this.name = name;
+    }
+
+    public @NotNull String getRace() {
+        return race;
+    }
+
+    public void setRace(@NotNull String race) {
+        this.race = race;
+    }
+
+    public @NotNull String getCharacterClass() {
+        return characterClass;
+    }
+
+    public void setCharacterClass(@NotNull String characterClass) {
+        this.characterClass = characterClass;
+    }
+}

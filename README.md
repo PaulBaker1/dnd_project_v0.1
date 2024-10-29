@@ -136,3 +136,4 @@ For any issues or suggestions, feel free to create an issue or reach out via Git
 
 ### Key Updates:
 - **Backend Config**: Updated instructions to use `application.yml` (instead of `application.properties`).
+# dnd_manager_0.1v
